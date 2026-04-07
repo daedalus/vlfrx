@@ -214,7 +214,7 @@ def generate_impulse(
     """
     n_samples = int(duration * fs)
     signal = np.zeros(n_samples)
-    idx = int(position * n_samples)
+    idx = int(position * (n_samples - 1))
     if idx < n_samples:
         signal[idx] = amplitude
     return signal
@@ -324,6 +324,9 @@ def generate_fm(
     """
     n_samples = int(duration * fs)
     t = np.arange(n_samples) / fs
+
+    if deviation == 0:
+        return carrier_amplitude * np.sin(2 * np.pi * carrier_freq * t)
 
     mod = mod_freq * np.sin(2 * np.pi * mod_freq * t)
     phase = 2 * np.pi * np.cumsum(carrier_freq + deviation * mod) / fs

@@ -223,11 +223,6 @@ def compute_dft(
         Complex DFT values at requested frequencies
     """
     n = len(signal_data)
-    t = np.arange(n) / fs
-
-    result = np.zeros(len(freqs), dtype=complex)
-
-    for i, f in enumerate(freqs):
-        result[i] = np.sum(signal_data * np.exp(-2j * np.pi * f * t))
-
-    return result
+    t = np.arange(n)[:, np.newaxis] / fs
+    f_grid = np.asarray(freqs)[np.newaxis, :]
+    return np.dot(signal_data, np.exp(-2j * np.pi * f_grid * t)).flatten()

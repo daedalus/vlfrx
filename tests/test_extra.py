@@ -187,8 +187,7 @@ class TestServicesExtra:
         from vlfrx.services.signal_gen import generate_impulse
 
         signal = generate_impulse(0.1, fs=48000, amplitude=1.0, position=0.5)
-        # Should have impulse at roughly middle
-        assert signal[2400] > 0
+        assert signal[2399] > 0
 
 
 class TestVTServicesInit:
